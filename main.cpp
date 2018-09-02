@@ -1,13 +1,15 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 template <typename T>
 ostream& operator<<(ostream& os, const vector<T>& v)
 {
     os << "[";
-    for (int i = 0; i < v.size(); ++i) {
+    for (size_t i = 0; i < v.size(); ++i) {
         os << v[i];
         if (i != v.size() - 1)
             os << ", ";
@@ -22,6 +24,8 @@ vector<int> getPermutations(int number);
 void permute(vector<string> &pVec, string a, int l, int r);
 
 int main(){
+  auto start = high_resolution_clock::now();
+
   vector <int> rotaryPrimes;
   for(int i = 0; i < 1000000; ++i){
     if(isPrime(i)){
@@ -31,8 +35,14 @@ int main(){
     }
   }
   cout << rotaryPrimes;
-}
 
+  auto stop = high_resolution_clock::now();
+  auto duration = duration_cast<milliseconds>(stop - start);
+
+  cout << "\n";
+  cout << "Program took " << duration.count()
+       << " milli seconds to finish\n";
+}
 
 bool isPrime(int number) {
   if(number < 2){
