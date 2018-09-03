@@ -20,7 +20,7 @@ ostream& operator<<(ostream& os, const vector<T>& v)
  
 bool isPrime(int number);
 bool isRotaryPrime(int number);
-vector<int> getPermutations(int number);
+vector<string> getPermutations(string number);
 void permute(vector<string> &pVec, string a, int l, int r);
 
 int main(){
@@ -57,7 +57,13 @@ bool isPrime(int number) {
 }
 
 bool isRotaryPrime(int number){
-  vector<int> permutatedNumbers = getPermutations(number);
+  string strNumber = to_string(number);
+  vector<string> v = getPermutations(strNumber);
+  vector<int> permutatedNumbers;
+  for(const auto &i : v){
+    permutatedNumbers.push_back(stoi(i));
+  }
+  
   for(size_t i = 0; i < permutatedNumbers.size(); ++i){
     if(!isPrime(permutatedNumbers[i])){
       return false;
@@ -78,13 +84,8 @@ void permute(vector<string> &pVec, string a, int l, int r){
   }
 }
 
-vector<int> getPermutations(int number){
-  string strNumber = to_string(number);
+vector<string> getPermutations(string s){
   vector<string> v;
-  vector<int> vi;
-  permute(v, strNumber, 0, strNumber.size() - 1);
-  for(const auto &i : v){
-    vi.push_back(stoi(i));
-  }
-  return vi;
+  permute(v, s, 0, s.size() - 1);
+  return v;
 }
